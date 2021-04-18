@@ -5,35 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.tokoku.R
+import com.example.tokoku.adapter.AdapterProduk
 import com.example.tokoku.adapter.AdapterSlider
+import com.example.tokoku.model.Produk
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
 
     lateinit var vpSlider: ViewPager
-
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var rvProduk:RecyclerView
+    lateinit var rvTerlaris:RecyclerView
+    lateinit var rvElektronik:RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +29,9 @@ class HomeFragment : Fragment() {
         val view : View = inflater.inflate(R.layout.fragment_home, container, false)
 
         vpSlider = view.findViewById(R.id.vp_slider)
+        rvProduk = view.findViewById(R.id.rv_produk)
+        rvTerlaris = view.findViewById(R.id.rv_terlaris)
+        rvElektronik = view.findViewById(R.id.rv_elektronik)
 
         //array untuk gambar
         val arraySlider = ArrayList<Int>()
@@ -54,28 +42,101 @@ class HomeFragment : Fragment() {
         // panggil adapter
         val adapterSlider = AdapterSlider(arraySlider, activity)
         vpSlider.adapter = adapterSlider
+        // layout produk
+        val layoutManager1 = LinearLayoutManager(activity)
+        layoutManager1.orientation = LinearLayoutManager.HORIZONTAL
+        // layout terlaris
+        val layoutManager2 = LinearLayoutManager(activity)
+        layoutManager2.orientation = LinearLayoutManager.HORIZONTAL
+        // layout elektronik
+        val layoutManager3 = LinearLayoutManager(activity)
+        layoutManager3.orientation = LinearLayoutManager.HORIZONTAL
 
+        rvProduk.adapter = AdapterProduk(arrayProduk)
+        rvProduk.layoutManager = layoutManager1
+
+        rvTerlaris.adapter = AdapterProduk(arrayTerlaris)
+        rvTerlaris.layoutManager = layoutManager2
+
+        rvElektronik.adapter = AdapterProduk(arrayElektronik)
+        rvElektronik.layoutManager = layoutManager3
 
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    val arrayProduk: ArrayList<Produk>get() {
+        val array = ArrayList<Produk>()
+
+        val p1 = Produk()
+        p1.nama = "Hp Envy 13"
+        p1.harga = "Rp.5.000.000"
+        p1.gambar = R.drawable.hp_pavilion_13_an0006na
+
+        val p2 = Produk()
+        p2.nama = "Hp Core i5"
+        p2.harga = "Rp.6.000.000"
+        p2.gambar = R.drawable.hp_envy_13_aq0019tx
+
+        val p3 = Produk()
+        p3.nama = "Hp Pavilion 13"
+        p3.harga = "Rp.9.000.000"
+        p3.gambar = R.drawable.hp_notebook_14_bs709tu
+
+        array.add(p1)
+        array.add(p2)
+        array.add(p3)
+
+        return array
     }
+
+    val arrayTerlaris: ArrayList<Produk>get() {
+        val array = ArrayList<Produk>()
+
+        val t1 = Produk()
+        t1.nama = "Hp Envy"
+        t1.harga = "Rp.5.000.000"
+        t1.gambar = R.drawable.hp_notebook_14_bs709tu
+
+        val t2 = Produk()
+        t2.nama = "Hp Core"
+        t2.harga = "Rp.6.000.000"
+        t2.gambar = R.drawable.hp_envy_13_aq0019tx
+
+        val t3 = Produk()
+        t3.nama = "Hp Pavilion"
+        t3.harga = "Rp.9.000.000"
+        t3.gambar = R.drawable.hp_pavilion_13_an0006na
+
+        array.add(t1)
+        array.add(t2)
+        array.add(t3)
+
+        return array
+    }
+
+    val arrayElektronik: ArrayList<Produk>get() {
+        val array = ArrayList<Produk>()
+
+        val t1 = Produk()
+        t1.nama = "Hp Envy 13"
+        t1.harga = "Rp.5.000.000"
+        t1.gambar = R.drawable.hp_envy_13_aq0019tx
+
+        val t2 = Produk()
+        t2.nama = "Hp Core i5"
+        t2.harga = "Rp.6.000.000"
+        t2.gambar = R.drawable.hp_pavilion_13_an0006na
+
+        val t3 = Produk()
+        t3.nama = "Hp Pavilion 13"
+        t3.harga = "Rp.9.000.000"
+        t3.gambar = R.drawable.hp_notebook_14_bs709tu
+
+        array.add(t1)
+        array.add(t2)
+        array.add(t3)
+
+        return array
+    }
+
 }
